@@ -48,29 +48,24 @@
 {### Iterate thru tables in schema ###}
 {% for table in tables %}
 
-    {%- set source_relation = adapter.get_relation(
-        database=database_name,
-        schema=schema_name,
-        identifier=table) -%}
-
     {### Optionally adding prefix/suffix to target table ###}
     {% if prefix is not none -%}
-        {%- set target_table = prefix ~ source_relation.identifier  -%}
+        {%- set target_table = prefix ~ table  -%}
     {%- elif suffix is not none -%}
-        {%- set target_table = source_relation.identifier ~ suffix -%}
+        {%- set target_table = table ~ suffix -%}
     {%- else -%}
-        {%- set target_table = source_relation.identifier -%}
+        {%- set target_table = table -%}
     {%- endif -%}
 
     {### Creating base model name ###}
     {%- if source_name is not none -%}
         {%- set model_name = source_name ~ "_" ~ target_table -%}
     {%- else -%}
-        {%- set model_name = source_relation.database ~ "_" ~ source_relation.schema ~ "_" ~ target_table -%}
+        {%- set model_name = database_name ~ "_" ~ schema_name ~ "_" ~ target_table -%}
     {%- endif -%}
 
     {### Casting to lower/upper case table/model names ###}
-    {%- if source_relation.identifier is upper -%}
+    {%- if table is upper -%}
         {%- set target_table = target_table | upper -%}
         {%- set model_name = model_name | upper -%}
     {%- else -%}
@@ -89,7 +84,7 @@
 
 {{ model_config_block }}
 
-select * from {% raw %}{{ source({% endraw %}'{{ source_name | lower }}', '{{ source_relation.identifier | lower }}'{% raw %}) }}{% endraw %}
+select * from {% raw %}{{ source({% endraw %}'{{ source_name | lower }}', '{{ table | lower }}'{% raw %}) }}{% endraw %}
 
 {{ "{% endsnapshot %}" }}
 
