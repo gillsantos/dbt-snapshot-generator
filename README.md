@@ -1,11 +1,11 @@
-# dbt-snapshots
+# dbt-snapshot-generator
 
 Macro that generate dbt snapshots, and log it to the command line. Read more on [snapshots](https://docs.getdbt.com/docs/build/snapshots).
 
 This macro was totally inspired by codegen, but does not require this package. Don't know codegen? Read more about it [here](https://https://hub.getdbt.com/dbt-labs/codegen/latest/).
 
 # Contents
-- [dbt-snapshots](#dbt-snapshots)
+- [dbt-snapshot-generator](#dbt-snapshot-generator)
 - [Contents](#contents)
 - [Installation instructions](#installation-instructions)
 - [Macro](#macro)
